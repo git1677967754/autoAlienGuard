@@ -22,3 +22,7 @@
 游戏设置1920*1080
 
 python版本 <= 3.10
+
+### 感谢：
+1. PaddleOCR-json：https://github.com/hiroi-sora/RapidOCR-json
+2. Pyautogui：https://github.com/asweigart/pyautogui
