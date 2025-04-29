@@ -33,10 +33,17 @@ def trigger():
             unit.my_click(115, 990)
         elif unit.is_img_exist('./jietu/screenshot1.png', './img/5.jpeg'):
             # 分数已达上限，退出脚本
-            pyautogui.screenshot(region=[149, 976, 106, 35]).save('./jietu/screenshot2.png')
-            if int(unit.my_ocr('../jietu/screenshot2.png')) >= 70000:
+            flag = True
+            result = 0
+            while flag:
+                pyautogui.screenshot(region=[149, 976, 106, 35]).save('./jietu/screenshot2.png')
+                result = unit.my_ocr('../jietu/screenshot2.png')
+                if result != 'No text found in image.' and unit.check_ocr_result(result[0]['text']):
+                    result = int(result[0]['text'])
+                    flag = False
+            if result >= 86500:
                 # 可选是否退出游戏，游戏进程为'Game.exe'，若出现同名进程，存在误删可能
-                # unit.kill_process_by_name('Game.exe')
+                unit.kill_process_by_name('Game.exe')
                 exit()
             unit.my_click(1801, 50)
             time.sleep(3)

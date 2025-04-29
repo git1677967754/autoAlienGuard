@@ -29,6 +29,8 @@ def is_img_exist(shot_img_path, img_path):
     # 如果最大值大于阈值，则认为小图存在于大图中
     return max_val > threshold
 
+
+
 def keyboard_click(key = 'e', sleep_time = 1):
     """
     模拟键盘点击，附带延迟
@@ -84,4 +86,11 @@ def my_ocr(img_path):
     # 打印识别结果
     print(res)
     # 返回识别结果中的文本
-    return res['data'][0]['text']
+    return res['data']
+
+def check_ocr_result(ocr_result):
+    try:
+        int(ocr_result)
+        return True
+    except ValueError:
+        return False
