@@ -7,15 +7,16 @@ import psutil
 from RapidOCR_api import OcrAPI
 
 
-def is_img_exist(shot_img_path, img_path):
+def is_img_exist(shot_img_path, img_path, threshold = 0.8):
     """
     判断图片是否存在
+    :param threshold: 精度阈值
     :param shot_img_path: 大图
     :param img_path: 小图
     :return: true or false
     """
-    shot_img = cv2.imread(shot_img_path)
-    img = cv2.imread(img_path)
+    shot_img = cv2.imread(shot_img_path, cv2.IMREAD_GRAYSCALE)
+    img = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
 
     if shot_img is None or img is None:
         raise ValueError("无法读取图片，请检查路径是否正确")
@@ -24,8 +25,6 @@ def is_img_exist(shot_img_path, img_path):
     result = cv2.matchTemplate(shot_img, img, cv2.TM_CCOEFF_NORMED)
     min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
 
-    # 设定匹配阈值，可以根据实际情况调整
-    threshold = 0.8
     # 如果最大值大于阈值，则认为小图存在于大图中
     return max_val > threshold
 
@@ -62,6 +61,8 @@ def bring_to_front(window_title):
     window = pygetwindow.getWindowsWithTitle(window_title)
     # 将窗口调至焦点
     window[0].activate()
+    x, y, width, height = window[0].left, window[0].top, window[0].width, window[0].height
+    return x, y, width, height
 
 
 def kill_process_by_name(process_name):

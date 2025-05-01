@@ -8,7 +8,7 @@ import unit
 # 全局退出标志
 exit_flag = False
 
-def trigger():
+def trigger(size):
     """
     触发程序
     :return:None
@@ -16,7 +16,7 @@ def trigger():
     while True:
         if exit_flag:
             exit()
-        pyautogui.screenshot().save('./jietu/screenshot1.png')
+        pyautogui.screenshot(region = size).save('./jietu/screenshot1.png')
         if unit.is_img_exist('./jietu/screenshot1.png', './img/2.jpeg'):
             # 判断是否选择技能
             for i in range(5):
@@ -33,18 +33,18 @@ def trigger():
             unit.my_click(115, 990)
         elif unit.is_img_exist('./jietu/screenshot1.png', './img/5.jpeg'):
             # 分数已达上限，退出脚本
-            flag = True
-            result = 0
-            while flag:
-                pyautogui.screenshot(region=[149, 976, 106, 35]).save('./jietu/screenshot2.png')
-                result = unit.my_ocr('../jietu/screenshot2.png')
-                if result != 'No text found in image.' and unit.check_ocr_result(result[0]['text']):
-                    result = int(result[0]['text'])
-                    flag = False
-            if result >= 86500:
-                # 可选是否退出游戏，游戏进程为'Game.exe'，若出现同名进程，存在误删可能
-                unit.kill_process_by_name('Game.exe')
-                exit()
+            # flag = True
+            # result = 0
+            # while flag:
+            #     pyautogui.screenshot(region=[149, 976, 106, 35]).save('./jietu/screenshot2.png')
+            #     result = unit.my_ocr('../jietu/screenshot2.png')
+            #     if result != 'No text found in image.' and unit.check_ocr_result(result[0]['text']):
+            #         result = int(result[0]['text'])
+            #         flag = False
+            # if result >= 86500:
+            #     # 可选是否退出游戏，游戏进程为'Game.exe'，若出现同名进程，存在误删可能
+            #     unit.kill_process_by_name('Game.exe')
+            #     exit()
             unit.my_click(1801, 50)
             time.sleep(3)
         elif unit.is_img_exist('./jietu/screenshot1.png', './img/1.jpeg'):
@@ -66,9 +66,9 @@ def on_key(event):
 
 keyboard.on_press(on_key)
 try:
-    unit.bring_to_front('尘白禁区')
+    shot_window = unit.bring_to_front('尘白禁区')
 except Exception as e:
     print(e)
     exit()
-trigger()
+trigger(shot_window)
 
