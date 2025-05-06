@@ -79,9 +79,9 @@ def kill_process_by_name(process_name):
 
 def my_ocr(img_path):
     # 定义OCR识别程序的路径
-    ocrPath = 'RapidOCR-json_v0.2.0/RapidOCR-json.exe'
+    ocr_path = 'RapidOCR-json_v0.2.0/RapidOCR-json.exe'
     # 创建OCR识别对象
-    ocr = OcrAPI(ocrPath, '--unClipRatio=0.3')
+    ocr = OcrAPI(ocr_path, '--unClipRatio=0.3')
     # 运行OCR识别程序，获取识别结果
     res = ocr.run(img_path)
     # 打印识别结果
